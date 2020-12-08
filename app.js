@@ -18,7 +18,7 @@ const download = require('download');
 //     const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js';
 //     await download(url, './');
 // }
-const filepath = './scripts/JD-DailyBonus/JD_DailyBonus.js'
+const filepath = './Script/JD-DailyBonus/JD_DailyBonus.js'
 async function changeFile () {
    let content = await fs.readFileSync(filepath, 'utf8')
    content = content.replace(/var Key = ''/, `var Key = '${KEY}'`);
@@ -54,7 +54,7 @@ async function start() {
   // await changeFile();
   // console.log('替换变量完毕')
   // 执行
-  await exec("node ./scripts/JD-DailyBonus/JD_DailyBonus.js >> result.txt");
+  await exec("node ./Script/JD-DailyBonus/JD_DailyBonus.js >> result.txt");
   console.log('执行完毕')
 
   if (serverJ) {
