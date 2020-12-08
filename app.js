@@ -7,20 +7,20 @@ const fs = require('fs');
 const rp = require('request-promise');
 const download = require('download');
 
-// 公共变量
-const KEY = process.env.JD_COOKIE;
-const serverJ = process.env.PUSH_KEY;
-const DualKey = process.env.JD_COOKIE_2;
+// // 公共变量
+// const KEY = process.env.JD_COOKIE;
+// const serverJ = process.env.PUSH_KEY;
+// const DualKey = process.env.JD_COOKIE_2;
 
 
-async function downFile () {
-    // const url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js'
-    const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js';
-    await download(url, './');
-}
-
+// async function downFile () {
+//     // const url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js'
+//     const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js';
+//     await download(url, './');
+// }
+const filepath = './scripts/JD-DailyBonus/JD_DailyBonus.js'
 async function changeFile () {
-   let content = await fs.readFileSync('./JD_DailyBonus.js', 'utf8')
+   let content = await fs.readFileSync(filepath, 'utf8')
    content = content.replace(/var Key = ''/, `var Key = '${KEY}'`);
    if (DualKey) {
     content = content.replace(/var DualKey = ''/, `var DualKey = '${DualKey}'`);
@@ -48,13 +48,13 @@ async function start() {
     return
   }
   // 下载最新代码
-  await downFile();
-  console.log('下载代码完毕')
+  // await downFile();
+  // console.log('下载代码完毕')
   // 替换变量
-  await changeFile();
-  console.log('替换变量完毕')
+  // await changeFile();
+  // console.log('替换变量完毕')
   // 执行
-  await exec("node JD_DailyBonus.js >> result.txt");
+  await exec("node ./scripts/JD-DailyBonus/JD_DailyBonus.js >> result.txt");
   console.log('执行完毕')
 
   if (serverJ) {
@@ -68,7 +68,7 @@ async function start() {
     let t2 = content.match(/【签到总计】:((.|\n)*)【账号总计】/)
     let res2 = t2 ? t2[1].replace(/\n/,'') : '总计0'
 
-    
+
     await sendNotify("" + ` ${res2} ` + ` ${res} ` + new Date().toLocaleDateString(), content);
   }
 }
